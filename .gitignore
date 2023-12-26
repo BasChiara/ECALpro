@@ -8,13 +8,16 @@
 *.pcm
 LSFJOB*/
 *.o
+*.swp
+*.swo
+cbasile.cc
 
 FillEpsilonPlot/data/Cert*JSON.txt
 submit/AfterCalibTools/PlotMaker/2DmapMaker/histoManager.h
 submit/AfterCalibTools/PlotMaker/2DmapMaker/main
 submit/AfterCalibTools/TestConvergence/*.log
 submit/AfterCalibTools/TestConvergence/plot_*
-submit/AlcaP0*
+submit/AlCaP0*
 submit/pi0data*
 submit/HLT*
 #submit/InputList/*
