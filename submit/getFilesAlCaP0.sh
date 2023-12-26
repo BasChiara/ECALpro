@@ -1,19 +1,19 @@
 #! /bin/bash
 
-thisYear="18"   # use 16, 17, 18
+thisYear="22"   # use 16, 17, 18
 dayMonthYear=`date +%d_%m_%Y`
 dataset="AlCaP0"
 runYear="20${thisYear}"
+eras=(B C D E F G) 
 #JsonFilter="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions${thisYear}/13TeV/DCSOnly/json_DCSONLY.txt"   # caution to the year
-JsonFilter="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/PromptReco/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt"
-#JsonFilter="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
-#JsonFilter="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt"
+JsonFilter="/afs/cern.ch/user/c/cbasile/CMSSW_12_4_2-pi0calib/src/CalibCode/submit/InputList/Cert_Collisions2022_355100_362760_eraBCDEFG_13p6TeV_DCSOnly_TkPx.json"
 firstRunBrilcalc="" # can be empty, otherwise it is used to select a run range for the brilcalc command
 lastRunBrilcalc="" # can be empty, otherwise it is used to select a run range for the brilcalc command
 
 ecalproFolder="${CMSSW_BASE}/src/CalibCode/submit/"
 outputdir="${ecalproFolder}InputList/"
-outputfile="${dataset}_Run${runYear}${dataEra}_${dayMonthYear}.list"
+#outputfile="${dataset}_Run${runYear}${dataEra}_${dayMonthYear}.list"
+outputfile="${dataset}_Run${runYear}${eras[0]}${eras[-1]}_${dayMonthYear}.list"
 fileList="${outputdir}${outputfile}"
 brilcalcOutputFile="${ecalproFolder}brilcalc_${outputfile/list/txt}"
 
@@ -27,7 +27,6 @@ if [[ ${host} != *"lxplus"* ]]; then
 fi
 
 echo "Creating list of file running dasgoclient"
-eras=(A B C D E F G H I L M N O P Q R S T U V Z)
 echo "" > ${fileList}
 for dataEra in ${eras[@]} 
 do 
