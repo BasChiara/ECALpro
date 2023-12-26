@@ -258,6 +258,7 @@ void calibAnaEcalEB::Loop()
   mean_iphiProfile->GetYaxis()->SetTitleSize(0.055);
   mean_iphiProfile->GetYaxis()->SetTitleOffset(0.8);
   mean_iphiProfile->SetStats(0);
+  mean_iphiProfile->SetLineWidth(2);
   mean_iphiProfile->Draw("HE");
   c_mean_iphi_prof->SaveAs( (wwwPath + mean_iphiProfile->GetName() + "_EB.pdf").c_str() );
   c_mean_iphi_prof->SaveAs( (wwwPath + mean_iphiProfile->GetName() + "_EB.png").c_str() );

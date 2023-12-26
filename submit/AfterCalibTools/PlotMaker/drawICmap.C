@@ -54,7 +54,8 @@ void normalizeMapTo1InEtaRing(TH2* map_norm1etaring_new = NULL, const TH2* map_n
 
   } else {
 
-    *map_norm1etaring_new = *map_new;
+    //*map_norm1etaring_new = *map_new;
+    //*map_norm1etaring_new = map_new->Clone();
 
   }
 
@@ -73,7 +74,7 @@ void drawICmap(const string& wwwPath = "",
   gStyle->SetPalette(55, 0);  // 1:raibow palette ; 107 kVisibleSpectrum ; 77 kDarkRainBow                                               
   gStyle->SetNumberContours(100); // default is 20 
 
-  string filename = "root://eoscms//eos/cms" + eosPath + dirName + "/" + iterNumber + "/" + tagName + "calibMap.root";
+  string filename = "/eos/cms" + eosPath + dirName + "/" + iterNumber + "/" + tagName + "calibMap.root";
 
   TFile* f = TFile::Open(filename.c_str(),"READ");
   if (!f || !f->IsOpen()) {
@@ -110,9 +111,9 @@ void drawICmap(const string& wwwPath = "",
     }
   }    
 
-
+  // *** ECAL BARREL *** // 
   TH2F *mapEB_new = new TH2F("mapEB_new","EB calib coefficients", 360, 0.5, 360.5, 171,-85.5,85.5 );
-  TH2F *mapEB_norm1etaring_new = new TH2F("mapEB_norm1etaring_new","EB calib coefficients (norm. to 1 in #eta-ring", 360, 0.5, 360.5, 171,-85.5,85.5 );
+  TH2F *mapEB_norm1etaring_new = new TH2F("mapEB_norm1etaring_new","EB calib coefficients (norm. to 1 in #eta-ring)", 360, 0.5, 360.5, 171,-85.5,85.5 );
   // profile along ieta. ieta goea from -85 to 85, exluding 0, for a total of 170 non empty bins (they are 171 including ieta = 0 which is actually empty)
   // in the profile, ieta = 30 is the bin with x from 29.5 to 30.5
   // simila logic for profile along iphi
@@ -129,7 +130,8 @@ void drawICmap(const string& wwwPath = "",
       
       for (Int_t j = 1; j <= nbinsY; j++) {
 	
-	mapEB_new->SetBinContent(j,(i-86.0),mapEB->GetBinContent(i,j));
+	//mapEB_new->SetBinContent(j,(i-86.0),mapEB->GetBinContent(i,j));
+	mapEB_new->SetBinContent(j,i,mapEB->GetBinContent(i,j));
 
 	EB_ieta_profile->Fill((i-86.0),mapEB->GetBinContent(i,j));
 	EB_iphi_profile->Fill(j,mapEB->GetBinContent(i,j));
@@ -142,9 +144,12 @@ void drawICmap(const string& wwwPath = "",
     
   }
 
+   
+  //system(Form("mkdir -p %s",outDir.c_str()));
+  //system(Form("cp /afs/cern.ch/user/m/mciprian/public/index.php %s",outDir.c_str()));
 
-
-  string wwwAllPath = wwwPath + dirName + "/" + iterNumber + "/2DMaps/";
+  //string wwwAllPath = wwwPath + dirName + "/" + iterNumber + "/2DMaps/";
+  string wwwAllPath = wwwPath; 
   string name = "";
   TPaletteAxis *palette = NULL;
 
@@ -169,7 +174,8 @@ void drawICmap(const string& wwwPath = "",
     gPad->Modified();
     gPad->Update();
     // end of palette fixes                                                                                                                                             
-    name = wwwAllPath + "Barrel/IC_calibMapEB";
+    //name = wwwAllPath + "Barrel/IC_calibMapEB";
+    name = wwwAllPath + "IC_calibMapEB";
     cEB->SaveAs((name + ".pdf").c_str());
     cEB->SaveAs((name + ".png").c_str());
 
@@ -193,7 +199,8 @@ void drawICmap(const string& wwwPath = "",
     //EB_ieta_profile->GetYaxis()->SetRangeUser(0.89,0.99);
     EB_ieta_profile->SetStats(0);
     gPad->Update();
-    name = wwwAllPath + "Barrel/IC_calibMapEB_ietaProfile";
+    //name = wwwAllPath + "Barrel/IC_calibMapEB_ietaProfile";
+    name = wwwAllPath + "IC_calibMapEB_ietaProfile";
     cEB_ietaProfile->SaveAs((name + ".pdf").c_str());
     cEB_ietaProfile->SaveAs((name + ".png").c_str());
 
@@ -213,7 +220,8 @@ void drawICmap(const string& wwwPath = "",
     //EB_iphi_profile->GetYaxis()->SetRangeUser(0.91,0.97);
     EB_iphi_profile->SetStats(0);
     gPad->Update();
-    name = wwwAllPath + "Barrel/IC_calibMapEB_iphiProfile";
+    //name = wwwAllPath + "Barrel/IC_calibMapEB_iphiProfile";
+    name = wwwAllPath + "IC_calibMapEB_iphiProfile";
     cEB_iphiProfile->SaveAs((name + ".pdf").c_str());
     cEB_iphiProfile->SaveAs((name + ".png").c_str());
 
@@ -240,7 +248,8 @@ void drawICmap(const string& wwwPath = "",
     gPad->Modified();
     gPad->Update();
     // end of palette fixes                                    
-    name = wwwAllPath + "Endcap/EEp/IC_calibMapEEp";
+    //name = wwwAllPath + "Endcap/EEp/IC_calibMapEEp";
+    name = wwwAllPath + "IC_calibMapEEp";
     cEEp->SaveAs((name + ".pdf").c_str());
     cEEp->SaveAs((name + ".png").c_str());
 
@@ -263,7 +272,8 @@ void drawICmap(const string& wwwPath = "",
     gPad->Modified();
     gPad->Update();
     // end of palette fixes                                    
-    name = wwwAllPath + "Endcap/EEm/IC_calibMapEEm";
+    //name = wwwAllPath + "Endcap/EEm/IC_calibMapEEm";
+    name = wwwAllPath + "IC_calibMapEEm"; 
     cEEm->SaveAs((name + ".pdf").c_str());
     cEEm->SaveAs((name + ".png").c_str());
 

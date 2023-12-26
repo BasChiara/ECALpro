@@ -63,6 +63,7 @@ void realDrawMapRatio(const string& outDir = "",
   TH1::StatOverflows(kTRUE);
 
   gStyle->SetPalette(55, 0);  // 55:raibow palette ; 57: kBird (blue to yellow) ; 107 kVisibleSpectrum ; 77 kDarkRainBow          
+  gStyle->SetLineWidth(2);
   gStyle->SetNumberContours(101); // default is 20 
 
   TFile* f = TFile::Open(inputFile.c_str(),"READ");
@@ -72,6 +73,10 @@ void realDrawMapRatio(const string& outDir = "",
     cout << "*******************************" << endl;
     exit(EXIT_FAILURE);
   }
+
+//----------------//
+//  ECAL BARREL   //
+//----------------//
 
   TH2F *mapEB = NULL;
   mapEB = (TH2F*) f->Get(mapName1.c_str());
@@ -183,6 +188,7 @@ void realDrawMapRatio(const string& outDir = "",
   cRatio1D->SetGridx(1);
   cRatio1D->SetGridy(1);
   hratioDistr->Draw("HIST");
+  hratioDistr->SetLineWidth(2);
   hratioDistr->GetXaxis()->SetTitle("ratio");
   hratioDistr->GetXaxis()->SetTitleSize(0.06);
   hratioDistr->GetXaxis()->SetTitleOffset(0.7);
@@ -277,6 +283,7 @@ void realDrawMapRatio(const string& outDir = "",
     dispersionIC2_EBmod[i]->SetStats(0);    
     dispersionIC_EBmod[i]->SetLineColor(kBlack);
     dispersionIC_EBmod[i]->GetYaxis()->SetRangeUser(0, 1.2*maxy);
+    dispersionIC_EBmod[i]->SetLineWidth(2);
     dispersionIC_EBmod[i]->Draw("HIST");
     dispersionIC_EBmod[i]->GetXaxis()->SetTitle("IC value");
     dispersionIC_EBmod[i]->GetXaxis()->SetTitleSize(0.06);
@@ -294,6 +301,7 @@ void realDrawMapRatio(const string& outDir = "",
     dispersionIC_EBmod[i]->GetYaxis()->SetTickSize(0.01);
     dispersionIC_EBmod[i]->GetXaxis()->SetTickSize(0.05);
     dispersionIC2_EBmod[i]->SetLineColor(kRed+2);
+    dispersionIC2_EBmod[i]->SetLineWidth(2);
     dispersionIC2_EBmod[i]->Draw("HIST SAME");
     pads[i]->RedrawAxis("sameaxis");
     pads[i]->Update();
@@ -518,6 +526,7 @@ void realDrawMapRatioEE(const string& outDir = "",
   cRatio1D->SetGridx(1);
   cRatio1D->SetGridy(1);
   hratioDistr->Draw("HIST");
+  hratioDistr->SetLineWidth(2);
   hratioDistr->GetXaxis()->SetTitle("ratio");
   hratioDistr->GetXaxis()->SetTitleSize(0.06);
   hratioDistr->GetXaxis()->SetTitleOffset(0.7);
@@ -552,7 +561,7 @@ void makeICratio(//const string& outDir = "/afs/cern.ch/user/m/mciprian/www/pi0c
 {
 
   system(Form("mkdir -p %s",outDir.c_str()));
-  system(Form("cp /afs/cern.ch/user/m/mciprian/public/index.php %s",outDir.c_str()));
+  system(Form("cp /afs/cern.ch/user/c/cbasile/public/index.php %s",outDir.c_str()));
 
   if (is_EB0_EEp1_EEm2 > 0) {
     realDrawMapRatioEE(outDir, inputFile1, inputFile2, canvasSuffix, mapName1, mapName2,mapMin,mapMax, is_EB0_EEp1_EEm2);

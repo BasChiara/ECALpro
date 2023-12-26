@@ -39,6 +39,7 @@
 #include "TCanvas.h"
 #include "TStyle.h"
 #include "TPaveStats.h"
+#include "TObjString.h"
 
 // using std::cout;
 // using std::endl;
@@ -259,7 +260,8 @@ void Convergence::run(const string& detectorToSkip = "no", const Bool_t& saveHis
       cout << "Running chunk " << iChunk << " iteration offset = " << iterOffset << endl;
       
       Int_t PrevChunkConsidered = false;   // when using an extension, it triggers the usage of the last calibMap from previous set of iterations
-      string PathL = "root://eoscms//eos/cms" + Path_0_ + Paths_[iChunk];
+      //string PathL = "root://eoscms//eos/cms" + Path_0_ + Paths_[iChunk];
+      string PathL = Path_0_ + Paths_[iChunk];
       
       for(int i=0; i<(int)nIters_[iChunk]-1; ++i){
 
@@ -278,7 +280,8 @@ void Convergence::run(const string& detectorToSkip = "no", const Bool_t& saveHis
         
 	if (iChunk > 0 && i == 0 && !PrevChunkConsidered) {
         
-	  string PathLPrevChunk = "root://eoscms//eos/cms" + Path_0_ + Paths_[iChunk-1];
+	  //string PathLPrevChunk = "root://eoscms//eos/cms" + Path_0_ + Paths_[iChunk-1];
+	  string PathLPrevChunk = Path_0_ + Paths_[iChunk-1];
           stringstream ssNminus1; ssNminus1 << nIters_[iChunk-1]-1;
           string fileName = string(PathLPrevChunk) + "/iter_" + ssNminus1.str() + "/" + string(Tags_[iChunk-1]) + "calibMap.root";   
           cout<<"Opening: "<<fileName<<endl;

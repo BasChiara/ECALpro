@@ -43,6 +43,7 @@
 #include <cmath>
 #include <sstream> //to use ostringstream to convert numbers to string in c++   
 #include <fstream>
+#include <iomanip> 
 
 #include "DataFormats/DetId/interface/DetId.h"
 #include "DataFormats/EcalDetId/interface/EBDetId.h"
@@ -804,10 +805,10 @@ void runOnTree(TH2* map_IC = NULL,
 
   while(reader.Next()) {
  
-    if (isEB) {
+    if (isEB) { //BARREL
       if (iphiOnXaxis) bin = map_IC->FindFixBin(*iphi_iy,*ieta_ix);
       else             bin = map_IC->FindFixBin(*ieta_ix,*iphi_iy);
-    } else {
+    } else { // ENDCAP
       if (izside != **iz) continue;
       bin = map_IC->FindFixBin(*ieta_ix, *iphi_iy);
     }      
@@ -871,12 +872,12 @@ void divideEBmap(TH2* h, const TH2* num, const TH2* den, const Bool_t noBadXtals
 
       bin = num->GetBin(ix,iy);
       if (noBadXtals) {
-	if (num->GetBinContent(bin) > EPSILON && fabs(num->GetBinContent(bin) -1.0) > EPSILON)
-	  ratio = (den->GetBinContent(bin) != 0.0) ? (num->GetBinContent(bin) / den->GetBinContent(bin)) : ICforBadXtals;
-	else
-	  ratio = ICforBadXtals;
+	      if (num->GetBinContent(bin) > EPSILON && fabs(num->GetBinContent(bin) -1.0) > EPSILON)
+	        ratio = (den->GetBinContent(bin) != 0.0) ? (num->GetBinContent(bin) / den->GetBinContent(bin)) : ICforBadXtals;
+	      else
+	        ratio = ICforBadXtals;
       } else {
-	ratio = (den->GetBinContent(bin) != 0.0) ? (num->GetBinContent(bin) / den->GetBinContent(bin)) : ICforBadXtals;
+	      ratio = (den->GetBinContent(bin) != 0.0) ? (num->GetBinContent(bin) / den->GetBinContent(bin)) : ICforBadXtals;
       }
 
       h->SetBinContent(bin, ratio);

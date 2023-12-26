@@ -13,14 +13,15 @@
 # tagName="AlcaP0_2016_json2p07fb_"
 
 iter_ini=0
-iter_fin=6  # it is included in sequence below                     
+iter_fin=2  # it is included in sequence below
 
-wwwPath="/afs/cern.ch/user/m/mciprian/www/pi0calib/ICplot/"
-eosPath="/store/group/dpg_ecal/alca_ecalcalib/piZero2017/mciprian/"
+wwwPath="/eos/user/c/cbasile/www/CalibPi0_Run3/plot_AlCaP0_2022BE_TestCalib/"
+eosPath="/store/group/dpg_ecal/comm_ecal/pi0/"
 #eosPath="/store/group/dpg_ecal/alca_ecalcalib/piZero2016/emanuele/"
 #eosPath="/store/group/dpg_ecal/alca_ecalcalib/piZero2016/zhicaiz/"
-dirName="AlCaP0_IC2017_upTo21September2017"
-tagName="${dirName}_"
+dirName="AlCaP0_2022BE_TestCalib_iter8to10"
+#tagName="${dirName}_"
+tagName="AlCaP0_2022BE_TestCalib_iter8to10_"
 
 ECALdetToSkip=""
 
