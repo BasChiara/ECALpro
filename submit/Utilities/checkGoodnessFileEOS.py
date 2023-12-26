@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import subprocess, time, sys, os, string
+import ROOT
 
 ## check if a file is good on eos, and delete it if it is not good
 # the file name should be of the form /eos/cms/... or root://eoscms//eos/cms
@@ -7,8 +9,6 @@
 ## 2) the kRecovered bit is true
 ## 3) it it is a zombie or empty (in which case it would probably fail the size check already)
 
-import subprocess, time, sys, os, string
-import ROOT
 
 from optparse import OptionParser                                                    
 
@@ -21,9 +21,9 @@ if len(args)<1:
     parser.print_usage()
     quit()
 
-print ""
 eosFile = args[0]
 eosFileNameToOpen = eosFile
+print("... I want to check %s "%eosFile)
 if eosFileNameToOpen.startswith("/eos/cms"):
     eosFileNameToOpen = "root://eoscms/" + eosFile
 elif not eosFileNameToOpen.startswith("root://eoscms//eos/cms"):
