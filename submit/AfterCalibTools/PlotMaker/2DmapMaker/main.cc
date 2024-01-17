@@ -24,7 +24,7 @@ Int_t main(int argc, char* argv[]) {
 
   string fileToChain = "";
   string path(argv[1]);
-  string eosPath = "root://eoscms//eos/cms" + path;
+  string eosPath = "/eos/cms" + path;
   string dirName(argv[2]);
   string iter_num(argv[3]);
   string tagName(argv[4]);
