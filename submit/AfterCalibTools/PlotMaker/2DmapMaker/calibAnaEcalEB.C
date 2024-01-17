@@ -238,6 +238,7 @@ void calibAnaEcalEB::Loop()
   c_mean_iphi_prof->SetTickx(1);
   c_mean_iphi_prof->SetTicky(1);
   c_mean_iphi_prof->SetGrid();
+  c_mean_iphi_prof->SetLineWidth(2);
   mean_iphiProfile->Draw("HE");
   mean_iphiProfile->GetXaxis()->SetTitle("i #phi");
   mean_iphiProfile->GetXaxis()->SetTitleSize(0.06);
@@ -258,6 +259,7 @@ void calibAnaEcalEB::Loop()
   mean_iphiProfile->GetYaxis()->SetTitleSize(0.055);
   mean_iphiProfile->GetYaxis()->SetTitleOffset(0.8);
   mean_iphiProfile->SetStats(0);
+  mean_iphiProfile->SetLineWidth(2);
   mean_iphiProfile->Draw("HE");
   c_mean_iphi_prof->SaveAs( (wwwPath + mean_iphiProfile->GetName() + "_EB.pdf").c_str() );
   c_mean_iphi_prof->SaveAs( (wwwPath + mean_iphiProfile->GetName() + "_EB.png").c_str() );

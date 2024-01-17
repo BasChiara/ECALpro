@@ -9,26 +9,15 @@
 
 
 iter_ini=0                                                    # first iteration to use
-iter_fin=0                                                      # last iteration to use: it is included in sequence below
-#path="/store/group/dpg_ecal/alca_ecalcalib/piZero2016/emanuele/"  # path to directory on eos
-#path="/store/group/dpg_ecal/alca_ecalcalib/piZero2016/mciprian/"  # path to directory on eos
-#path="/store/group/dpg_ecal/alca_ecalcalib/piZero2016/zhicaiz/"  # path to directory on eos
-path="/store/group/dpg_ecal/alca_ecalcalib/piZero_Run2/mciprian/"  # path to directory on eos
-#dirName="AlcaP0_Run2016G_sel16_reg12"                            # dirname (see CalibCode/submit/parameters.py)
-#dirName="AlCaP0_2016_ULrereco_from0"
-#dirName="AlCaP0_2018_ULrereco_1every2"
-dirName="AlCaEta_2018_tagAsPi0ForULcalibration_v2"
-#dirName="AlCaEta_2016_ULrereco"
-#dirName="AlCaEta_2017_ULrereco_all2017data"
-#dirName="AlCaEta_2018_ULrereco_all2018data"
-#dirName="AlCaP0_2016_ICfromUL"
-#tagName="AlCaP0_Run2017B_3July_upToRun297723_ext1_"                           # TagName (see CalibCode/submit/parameters.py) 
+iter_fin=5                                                      # last iteration to use: it is included in sequence below
+path="/store/group/dpg_ecal/comm_ecal/pi0/"  # path to directory on eos
+#dirName="AlCaP0_2023BCD_TestCalib"
+dirName="AlCaP0_2023BCD_TestCalib_iter4to10"
 tagName="${dirName}_"
 
 Pi0orEta="Pi0"  # possible options are Pi0 and Eta, axis ranges are set a little differently
 
-wwwBasePath="/afs/cern.ch/user/m/mciprian/www/pi0calib/ICplot_Legacy/"   # base directory where plots are stored (other directories are created inside this path) 
-
+wwwBasePath="/eos/user/c/cbasile/www/CalibPi0_Run3/" # base directory where plots are stored (other directories are created inside this path)
 # list of source files to compile (except main) without extension (which is supposed to be .C in the following)
 sourceFileList=(calibAnaEcal_base calibAnaEcal calibAnaEcalEB calibAnaEcalEE)  
 mainSourceFile="main"
@@ -131,21 +120,21 @@ do
 	echo  "iter_$i --> EB"
 	wwwPath="${wwwBasePath}${dirName}/iter_${i}/2DMaps/Barrel/"
 	mkdir -p ${wwwPath}
-	cp /afs/cern.ch/user/m/mciprian/public/index.php {wwwPath}
 	./$mainSourceFile $path $dirName $i $tagName EB $wwwPath $Pi0orEta
+	cp /afs/cern.ch/user/c/cbasile/public/index.php {wwwPath}
     fi
     if [ "$skipEEp" = false ]; then
 	echo  "iter_$i --> EE+"
 	wwwPath="${wwwBasePath}${dirName}/iter_${i}/2DMaps/Endcap/EEp/"
 	mkdir -p ${wwwPath}
-	cp /afs/cern.ch/user/m/mciprian/public/index.php {wwwPath}
+	cp /afs/cern.ch/user/c/cbasile/public/index.php {wwwPath}
 	./$mainSourceFile $path $dirName $i $tagName EEp $wwwPath $Pi0orEta
     fi
     if [ "$skipEEm" = false ]; then
 	echo  "iter_$i --> EE-"
 	wwwPath="${wwwBasePath}${dirName}/iter_${i}/2DMaps/Endcap/EEm/"
 	mkdir -p ${wwwPath}
-	cp /afs/cern.ch/user/m/mciprian/public/index.php {wwwPath}
+	cp /afs/cern.ch/user/c/cbasile/public/index.php {wwwPath}
 	./$mainSourceFile $path $dirName $i $tagName EEm $wwwPath $Pi0orEta
     fi
 done
