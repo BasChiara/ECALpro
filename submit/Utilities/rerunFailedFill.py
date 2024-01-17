@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python3 
 
 import subprocess, time, sys, os, string
 from ROOT import *
@@ -24,15 +24,15 @@ parser.add_option(       "--remove-allBad-exit", dest="removeAllBadExit",  actio
 (options, args) = parser.parse_args()
 
 if len(options.eosdir) == 0:
-    print "Need the path to eos with --eosdir <path>"
+    print ("Need the path to eos with --eosdir <path>")
     quit()
     
 if len(options.dirname) == 0:
-    print "Need the name of the folder with --dirname <name>"
+    print ("Need the name of the folder with --dirname <name>")
     quit()
 
 if options.iter < 0:
-    print "Need the iteration number with --iter <number>"
+    print ("Need the iteration number with --iter <number>")
     quit()
 
 # if options.nTot < 0:
@@ -40,13 +40,13 @@ if options.iter < 0:
 #     quit()
 
 if not options.useLSF:
-    print "Warning: at the moment only usage with LSF job submission is supported. Use --useLSF"
+    print ("Warning: at the moment only usage with LSF job submission is supported. Use --useLSF")
     quit()
     
 
 hostname = os.environ['HOSTNAME']
 if "lxplus" not in hostname:
-    print "Warning: you need to be on lxplus to use this script"
+    print ("Warning: you need to be on lxplus to use this script")
     quit()
 
 eosdir = options.eosdir
@@ -69,7 +69,7 @@ files = [os.path.join(fulleosfolder, f) for f in os.listdir(fulleosfolder) if (o
 for f in os.listdir(jobdir):
     if not f.endswith('.sh'): continue
     else: ntot += 1
-print "ntot = %d" % ntot
+print ("ntot = %d" % ntot)
 
 isGoodFile = {}
 for i in range(ntot):
@@ -86,7 +86,7 @@ for f in sorted(files):
     sys.stdout.flush()
     count += 1
 
-    if os.path.getsize > 30000000:  # expect about 75 MB, so ask at least 20
+    if os.path.getsize(f) > 30000000:  # expect about 75 MB, so ask at least 20
         # at this point the file should be good, but let's check if there are no recovered keys                                                           
         #open and check there are no recovered keys: in this case remove these files from the list, otherwise hadd might fail                             
         tf = TFile.Open("root://eoscms/"+f)        
@@ -105,48 +105,48 @@ for f in sorted(files):
             recoveredfiles.append(f)
         tf.Close()
 
-print "I see {n} good EcalNtp files".format(n=len(goodfiles))
+print ("I see {n} good EcalNtp files".format(n=len(goodfiles)))
 #print "There were {n} zombie EcalNtp files {text}".format(n=nZombie,text= "(removed)" if options.removeZombie else "(to be removed)")
-print "There were {n} zombie EcalNtp files".format(n=len(zombiefiles))
-print "There were {n} recovered EcalNtp files".format(n=len(recoveredfiles))
+print ("There were {n} zombie EcalNtp files".format(n=len(zombiefiles)))
+print ("There were {n} recovered EcalNtp files".format(n=len(recoveredfiles)))
 if options.checkZombie:
-    print "Printing list of zombies"
+    print ("Printing list of zombies")
     for f in sorted(zombiefiles):
-        print f
-    print "Printing list of recovered keys"
+        print(f)
+    print ("Printing list of recovered keys")
     for f in sorted(recoveredfiles):
-        print f
+        print(f)
     quit()
 
 if options.removeAllBadExit:
-    print "### Removing all bad files (zombies and recovered ones)"
+    print ("### Removing all bad files (zombies and recovered ones)")
     for f in sorted(zombiefiles):
         cmd = "rm " + f
         if options.pretend:            
-            print cmd
+            print(cmd)
         else:
             os.system(cmd)
     for f in sorted(recoveredfiles):
         cmd = "rm " + f
         if options.pretend:            
-            print cmd
+            print(cmd)
         else:
             os.system(cmd)
     quit()
 
 if options.removeZombie:
-    print "### Removing zombies"
+    print ("### Removing zombies")
     for f in sorted(zombiefiles):
         cmd = "rm " + f
         if options.pretend:            
-            print cmd
+            print(cmd)
         else:
             os.system(cmd)
-    print "### Removing recovered keys"
+    print ("### Removing recovered keys")
     for f in sorted(recoveredfiles):
         cmd = "rm " + f
         if options.pretend:            
-            print cmd
+            print(cmd)
         else:
             os.system(cmd)
 
@@ -161,10 +161,10 @@ for f in os.listdir(jobdir):
         cmd = "bsub -q {q} -oo {ld}/{jn}.log {jd}{job}".format(q=options.queue, ld=logdir, jn=jobN, jd=jobdir, job=f)
         if options.pretend:
             #pass
-            print cmd
+            print(cmd)
         else:
             os.system(cmd)
 
-print "Submitted {n} jobs".format(n=nJobToRun)
-print ""
-print ""
+print ("Submitted {n} jobs".format(n=nJobToRun))
+print ("")
+print ("")
