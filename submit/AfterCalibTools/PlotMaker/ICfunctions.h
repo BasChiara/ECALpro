@@ -43,6 +43,7 @@
 #include <cmath>
 #include <sstream> //to use ostringstream to convert numbers to string in c++   
 #include <fstream>
+#include <iomanip>
 
 #include "DataFormats/DetId/interface/DetId.h"
 #include "DataFormats/EcalDetId/interface/EBDetId.h"
