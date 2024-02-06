@@ -41,8 +41,8 @@ MakeNtuple4optimization = False
 useCalibrationSelection = False # to use same selection of calibration when making ntuples (so not to copy all the cuts)
 useStreamSelection = False   # for now it only work with MakeNtuple4optimization = True, otherwise it is ignored, it is a hardcoded way to use the stream selection below
 #InputList and Folder name
-inputlist_n      = 'InputList/purified_AlCaP0_Run2022FG_29_07_2023.list' if isMC==False else 'InputList/MultiPion_FlatPt-1To15_PhotonPtFilter_RunIIAutumn18DRPremix-102X_upgrade2018_realistic_v15-v2.list'
-dirname          = 'AlCaP0_2022FG_TestCalib_iter5to10' if isMC==False else 'pi0CC_2018_EoverEtrue_foldSM_nFit10_onlyEB_fixGamma2EoverEtrue'   #'pi0Gun_MCV2_EoverEtrue_foldSM' #'testMC_adirname          = 'AlCaEta_2018_tagAsPi0ForULcalibration_ntuplesOptim' if isMC==False else 'pi0CC_2018_EoverEtrue_foldSM_nFit10_onlyEB_fixGamma2EoverEtrue'   #'pi0Gun_MCV2_EoverEtrue_foldSM' #'testMC_all_v2' #'AlCaP0_IC2017_upTo21September2017_2012regression_v2' # 'test' 
+inputlist_n      = 'InputList/purified_AlCaP0_Run2022BG_29_07_2023.list' if isMC==False else 'InputList/MultiPion_FlatPt-1To15_PhotonPtFilter_RunIIAutumn18DRPremix-102X_upgrade2018_realistic_v15-v2.list'
+dirname          = 'AlCaP0_2022BG_onlyEE_TestCalib' if isMC==False else 'pi0CC_2018_EoverEtrue_foldSM_nFit10_onlyEB_fixGamma2EoverEtrue'   #'pi0Gun_MCV2_EoverEtrue_foldSM' #'testMC_adirname          = 'AlCaEta_2018_tagAsPi0ForULcalibration_ntuplesOptim' if isMC==False else 'pi0CC_2018_EoverEtrue_foldSM_nFit10_onlyEB_fixGamma2EoverEtrue'   #'pi0Gun_MCV2_EoverEtrue_foldSM' #'testMC_all_v2' #'AlCaP0_IC2017_upTo21September2017_2012regression_v2' # 'test' 
 NameTag          = dirname+'_' # Tag to the names to avoid overlap
 Silent           = False                 # True->Fill modules is silent; False->Fill modules has a standard output
 
@@ -61,7 +61,7 @@ queue            = 'cmscaf1nd'
 #############
 
 #ITERS
-nIterations      = 6 if isMC==False else 1 # 7
+nIterations      = 5 if isMC==False else 1 # 7
 if justCreateRecHits:
    nIterations = 1
 if MakeNtuple4optimization:
@@ -70,7 +70,7 @@ if MakeNtuple4optimization:
 
 SubmitFurtherIterationsFromExisting = True
 # maybe I don't need the root://eoscms/ prefix if eos is mounted
-startingCalibMap = '/eos/cms/store/group/dpg_ecal/comm_ecal/pi0/AlCaP0_2022FG_TestCalib/iter_4/AlCaP0_2022FG_TestCalib_calibMap.root'
+startingCalibMap = '/eos/cms/store/group/dpg_ecal/comm_ecal/pi0/AlCaP0_2022FG_TestCalib_iter5to10/iter_5/AlCaP0_2022FG_TestCalib_iter5to10_calibMap.root'
 # used  only if SubmitFurtherIterationsFromExisting is True
 SystOrNot = 0 # can be 0, 1 or 2 to run on all (default), even or odd events. It works only if you submit this new iteration from an existing one, therefore SubmitFurtherIterationsFromExisting must be set true. Tipically 0 is the default and has no real effect, it is like submitting usual iterations.  
 
@@ -82,7 +82,7 @@ nHadd            = 35 #35                    # 35 number of files per hadd
 nFit             = 2000 if isMC==False else 10                 # number of fits done in parallel
 useFit_RooMinuit = False if isEoverEtrue else True # if True the fit is done with RooMinuit, otherwise with RooMinimizer. The former is obsolete, but the latter can lead to a CMSSW error which makes the job fail, creating large white strips in the map. This happens often because the fit sees a negative PDF at the border of the fit range, RooFit will try to adjust the fit range to avoid the unphysical region, but after few trials CMSSW throws an error: without CMSSW the fit should actually be able to try several thousands of times before failing
 # However, at least from CMSSW_10_2_X, for EoverEtrue with fits using RooCMSshape+double-Crystal-Ball the fits are much better, so let's use RooMinimizer in that case
-Barrel_or_Endcap = 'ALL_PLEASE'          # Option: 'ONLY_BARREL','ONLY_ENDCAP','ALL_PLEASE'
+Barrel_or_Endcap = 'ONLY_ENDCAP'          # Option: 'ONLY_BARREL','ONLY_ENDCAP','ALL_PLEASE'
 ContainmentCorrection = 'EoverEtrue' # Option: 'EoverEtrue' , 'No'
 copyCCfileToTMP = False  # copy file from eos to /tmp/, should make jobs faster
 foldInSuperModule = False if isMC==False else True
