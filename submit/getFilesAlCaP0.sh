@@ -1,13 +1,13 @@
 #! /bin/bash
 
-thisYear="22"   # use 16, 17, 18, 22, 23 ecc...
+thisYear="23"   # use 16, 17, 18, 22, 23 ecc...
 dayMonthYear=`date +%d_%m_%Y`
 dataset="AlCaP0"
 runYear="20${thisYear}"
 # 2022 Golden json (era B-G)
-JsonFilter="/eos/user/c/cmsdqm/www/CAF/certification/Collisions22/Cert_Collisions2022_355100_362760_Golden.json"
+#JsonFilter="/eos/user/c/cmsdqm/www/CAF/certification/Collisions22/Cert_Collisions2022_355100_362760_Golden.json"
 # 2023 Golden json (era B-D)
-#JsonFilter="/eos/user/c/cmsdqm/www/CAF/certification/Collisions23/Cert_Collisions2023_366442_370790_Golden.json"
+JsonFilter="/eos/user/c/cmsdqm/www/CAF/certification/Collisions23/Cert_Collisions2023_366442_370790_Golden.json"
 # 2023 DCSonly json
 #JsonFilter="/eos/user/c/cmsdqm/www/CAF/certification/Collisions23/DCSOnly_JSONS/Collisions23_13p6TeV_eraBCD_366403_370790_DCSOnly_TkPx.json"
 firstRunBrilcalc="" # can be empty, otherwise it is used to select a run range for the brilcalc command
@@ -30,7 +30,7 @@ fi
 
 echo "Creating list of file running dasgoclient"
 eras=(A B C D E F G H I L M N O P Q R S T U V Z)
-eras=(B C D E F G) 
+eras=(B C D ) 
 echo "" > ${fileList}
 for dataEra in ${eras[@]} 
 do 
