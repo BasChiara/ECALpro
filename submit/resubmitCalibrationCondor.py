@@ -26,7 +26,7 @@ if options.run not in ["hadd","finalhadd","fit","mergefit"]:
     print("Option -r requires one of [hadd,finalhadd,fit,mergefit], while '%s' was given. Abort" % options.run)
 
 pwd                 = os.getcwd()
-workdir = pwd+'/'+dirname
+workdir = pwd+'/'+outdir_name
 condordir = workdir + "/condor_files/"
 
 ### setting environment

@@ -111,7 +111,7 @@ if options.resubmit:
 Add_path = '' # can add additional path after iter_XXX/
 njobs = options.njobs
 
-outputdir = pwd+'/'+dirname
+outputdir = pwd+'/'+outdir_name
 condorPath  = outputdir + '/condor_files/'
 logPath     = outputdir + '/log'
 srcPath     = outputdir + '/src'
@@ -226,7 +226,7 @@ for iters in range(options.iteration,nIterations):
                     # one could also save some information locally to assess in a faster way how many and which jobs failed
                     #######
                  
-                    eosFile = eosPath + "/" + dirname + "/iter_" + str(iters) + "/" + NameTag + "EcalNtp_" + str(ih) + ".root"
+                    eosFile = eosPath + "/" + outdir_name + "/iter_" + str(iters) + "/" + NameTag + "EcalNtp_" + str(ih) + ".root"
                     Ntp_src_n = srcPath + "/Fill/iter_" + str(iters) + "/submit_iter_" + str(iters) + "_job_" + str(ih) + ".sh"
                     print("checking the presence and the sanity of EcalNtp file: " + eosFile)
                     ######
@@ -400,7 +400,7 @@ for iters in range(options.iteration,nIterations):
         # Check if all the hadds are there and files are not empty
         goodHadds = 0
         for ih in range(Nlist):
-            eosFile = eosPath + "/" + dirname + "/iter_" + str(iters) + "/" + NameTag + "epsilonPlots_" + str(ih) + ".root"
+            eosFile = eosPath + "/" + outdir_name + "/iter_" + str(iters) + "/" + NameTag + "epsilonPlots_" + str(ih) + ".root"
             filesize=0
             if os.path.exists(eosFile): filesize = os.path.getsize(eosFile)
             if filesize>100000:
@@ -429,7 +429,7 @@ for iters in range(options.iteration,nIterations):
             print("Trying to recover failed hadd. Attempt n." + str(HaddRecoveryAttempt))
             goodHadds = 0
             for ih in range(Nlist):
-                eosFile = eosPath + "/" + dirname + "/iter_" + str(iters) + "/" + NameTag + "epsilonPlots_" + str(ih) + ".root"
+                eosFile = eosPath + "/" + outdir_name + "/iter_" + str(iters) + "/" + NameTag + "epsilonPlots_" + str(ih) + ".root"
                 filesize=0
                 if os.path.exists(eosFile): 
                     filesize = os.path.getsize(eosFile)
@@ -546,7 +546,7 @@ If this is not the case, modify FillEpsilonPlot.cc
     if foldInSuperModule and not ONLYMERGEFIT:
         # check if the file is already present, in which case this step can be skipped
         histograms_foldedInSM_exists = False
-        hFoldFile = eosPath + '/' + dirname + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'histograms_foldedInSM.root'
+        hFoldFile = eosPath + '/' + outdir_name + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'histograms_foldedInSM.root'
         if not os.path.isfile(hFoldFile):
             srcFold_n = srcPath + "/Fit/submit_justFoldSM_iter_" + str(iters) + ".sh"
             Fitsubmit_s = "{src}".format(src=srcFold_n)
@@ -588,20 +588,20 @@ If this is not the case, modify FillEpsilonPlot.cc
     if (not ONLYMERGEFIT): print('Submitting ' + str(nEB) + ' jobs to fit the Barrel')
     for inteb in range(nEB):
         fit_src_n = srcPath + "/Fit/submit_EB_" + str(inteb) + "_iter_"     + str(iters) + ".sh"
-        ListFinalHaddEB.append(eosPath + '/' + dirname + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Barrel_'+str(inteb)+'_' + calibMapName )
+        ListFinalHaddEB.append(eosPath + '/' + outdir_name + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Barrel_'+str(inteb)+'_' + calibMapName )
         if (not ONLYMERGEFIT):
             print('About to EB fit:')
-            print(eosPath + '/' + dirname + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Barrel_'+str(inteb)+'_' + calibMapName)            
+            print(eosPath + '/' + outdir_name + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Barrel_'+str(inteb)+'_' + calibMapName)            
             condor_file.write('arguments = {sf} \nqueue 1 \n\n'.format(sf=os.path.abspath(fit_src_n)))
 
     # preparing submission of fit tasks (EE)
     if (not ONLYMERGEFIT): print('Submitting ' + str(nEE) + ' jobs to fit the Endcap')
     for inte in range(nEE):        
         fit_src_n = srcPath + "/Fit/submit_EE_" + str(inte) + "_iter_"     + str(iters) + ".sh"
-        ListFinalHaddEE.append(eosPath + '/' + dirname + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Endcap_'+str(inte) + '_' + calibMapName)
+        ListFinalHaddEE.append(eosPath + '/' + outdir_name + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Endcap_'+str(inte) + '_' + calibMapName)
         if (not ONLYMERGEFIT):
             print('About to EE fit:')
-            print(eosPath + '/' + dirname + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Endcap_'+str(inte) + '_' + calibMapName)
+            print(eosPath + '/' + outdir_name + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Endcap_'+str(inte) + '_' + calibMapName)
             condor_file.write('arguments = {sf} \nqueue 1 \n\n'.format(sf=os.path.abspath(fit_src_n)))
 
     condor_file.close()
@@ -636,7 +636,7 @@ If this is not the case, modify FillEpsilonPlot.cc
     fit_src_toResub = []
     for inteb in range(nEB):
         fit_src_n = srcPath + "/Fit/submit_EB_" + str(inteb) + "_iter_"     + str(iters) + ".sh"
-        thisfile = eosPath + '/' + dirname + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Barrel_'+str(inteb)+'_' + calibMapName
+        thisfile = eosPath + '/' + outdir_name + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Barrel_'+str(inteb)+'_' + calibMapName
         #thisfile_f = TFile.Open(thisfile)
         if not os.path.isfile(thisfile):
             print("Will resubmit missing file {f}".format(f=thisfile))
@@ -644,7 +644,7 @@ If this is not the case, modify FillEpsilonPlot.cc
             fit_src_toResub.append(fit_src_n)
     for inte in range(nEE):        
         fit_src_n = srcPath + "/Fit/submit_EE_" + str(inte) + "_iter_"     + str(iters) + ".sh"
-        thisfile = eosPath + '/' + dirname + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Endcap_'+str(inte) + '_' + calibMapName
+        thisfile = eosPath + '/' + outdir_name + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + 'Endcap_'+str(inte) + '_' + calibMapName
         #thisfile_f = TFile.Open(thisfile)
         #if not thisfile_f:
         if not os.path.isfile(thisfile):
@@ -691,7 +691,7 @@ If this is not the case, modify FillEpsilonPlot.cc
        ListFinalHadd = ListFinalHaddEB
        ListFinalHadd = ListFinalHadd + ListFinalHaddEE
 
-    finalCalibMapFileName = eosPath + '/' + dirname + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + calibMapName
+    finalCalibMapFileName = eosPath + '/' + outdir_name + '/iter_' + str(iters) + '/' + Add_path + '/' + NameTag + calibMapName
     f = TFile.Open(finalCalibMapFileName, 'recreate')
     if not f:
         print("WARNING in calibJobHandlerCondor.py: file '" + finalCalibMapFileName +  "' not opened correctly. Quitting ...")
@@ -701,7 +701,7 @@ If this is not the case, modify FillEpsilonPlot.cc
     # cbasile [CMSSW_13_3_0_pre3]: 
     #       solve the error >'TypeError: can only concatenate str (not "function") to str'
     #       when declaring finalCalibMapFileName
-    #       move the libFWCoreFWLite lib. import here since it contains a function called dirname() apparently
+    #       move the libFWCoreFWLite lib. import here since it contains a function called outdir_name() apparently
     from PhysicsTools.PythonAnalysis import *
     gSystem.Load("libFWCoreFWLite.so")
     #AutoLibraryLoader.enable()
@@ -917,7 +917,7 @@ If this is not the case, modify FillEpsilonPlot.cc
 
         # print "Printing list of files on eos ..."
         # print "############################"
-        # cmdEosLs = 'ls ' + eosPath + '/' + dirname + '/iter_' + str(iters) + "/"
+        # cmdEosLs = 'ls ' + eosPath + '/' + outdir_name + '/iter_' + str(iters) + "/"
         # eosFileList = subprocess.Popen([cmdEosLs], stdout=subprocess.PIPE, shell=True);
         # print eosFileList.communicate()[0].decode()
         # print "############################"

@@ -240,7 +240,7 @@ def printFillCfg2( outputfile, pwd , iteration, outputDir, ijob ):
     if justCreateRecHits:
         # here we create rechits through output module, without running fillEpsilon analyzer
         outputfile.write("## create rechits and save them\n")
-        outputfile.write("outRecHitsFileName = '%s/AlCaP0_RecHitsFromDigis_%s/out_%s.root'\n" % (eosOutputPathForRecHits, dirname, str(ijob)))
+        outputfile.write("outRecHitsFileName = '%s/AlCaP0_RecHitsFromDigis_%s/out_%s.root'\n" % (eosOutputPathForRecHits, outdir_name, str(ijob)))
         outputfile.write("process.outputALCAP0 = cms.OutputModule( 'PoolOutputModule',\n")
         outputfile.write("    fileName = cms.untracked.string( str(outRecHitsFileName) ),\n")
         outputfile.write("    fastCloning = cms.untracked.bool( False ),\n")
@@ -284,7 +284,7 @@ def printFillCfg2( outputfile, pwd , iteration, outputDir, ijob ):
             if (SubmitFurtherIterationsFromExisting and iteration == 0):
                 outputfile.write("process.analyzerFillEpsilon.calibMapPath = cms.untracked.string('" + startingCalibMap + "')\n")
             else:
-                outputfile.write("process.analyzerFillEpsilon.calibMapPath = cms.untracked.string('" + eosPath + "/" + dirname + "/iter_" + str(iteration-1) + "/" + NameTag + calibMapName + "')\n")
+                outputfile.write("process.analyzerFillEpsilon.calibMapPath = cms.untracked.string('" + eosPath + "/" + outdir_name + "/iter_" + str(iteration-1) + "/" + NameTag + calibMapName + "')\n")
             if SubmitFurtherIterationsFromExisting:
                 if SystOrNot != 0:
                     outputfile.write("process.analyzerFillEpsilon.SystOrNot = cms.untracked.int32(" + str(SystOrNot) + ")\n")
@@ -500,11 +500,11 @@ def printFitCfg( outputfile, iteration, outputDir, nIn, nFin, EBorEE, nFit, just
         outputfile.write("process.fitEpsilon.useFit_RooMinuit = cms.untracked.bool( True )\n")        
     outputfile.write("process.fitEpsilon.Barrel_orEndcap = cms.untracked.string('" + Barrel_or_Endcap + "')\n")
     if not(isCRAB): #If CRAB you have to put the correct path, and you do it on calibJobHandler.py, not on ./submitCalibration.py
-        outputfile.write("process.fitEpsilon.EpsilonPlotFileName = cms.untracked.string('" + eosPath + "/" + dirname + "/iter_" + str(iteration) + "/" + NameTag + "epsilonPlots.root')\n")
+        outputfile.write("process.fitEpsilon.EpsilonPlotFileName = cms.untracked.string('" + eosPath + "/" + outdir_name + "/iter_" + str(iteration) + "/" + NameTag + "epsilonPlots.root')\n")
         if (SubmitFurtherIterationsFromExisting and iteration == 0):
             outputfile.write("process.fitEpsilon.calibMapPath = cms.untracked.string('" + startingCalibMap + "')\n")
         else:
-            outputfile.write("process.fitEpsilon.calibMapPath = cms.untracked.string('" + eosPath + "/" + dirname + "/iter_" + str(iteration-1) + "/" + NameTag + calibMapName + "')\n")
+            outputfile.write("process.fitEpsilon.calibMapPath = cms.untracked.string('" + eosPath + "/" + outdir_name + "/iter_" + str(iteration-1) + "/" + NameTag + calibMapName + "')\n")
     if justDoHistogramFolding:
         outputfile.write("process.fitEpsilon.makeFoldedHistograms = cms.untracked.bool(True)\n")
     else:

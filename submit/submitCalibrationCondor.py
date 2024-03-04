@@ -20,14 +20,14 @@ if ContainmentCorrection == '2017reg':
 
 #-------- create folders --------#
 
-workdir = pwd+'/'+dirname
+workdir = pwd+'/'+outdir_name
 condordir = workdir + "/condor_files/"
 cfgFillPath = workdir + '/cfgFile/Fill'
 cfgFitPath  = workdir + '/cfgFile/Fit'
 cfgHaddPath  = workdir + '/src/hadd'
 srcPath  = workdir + '/src'
 
-print("[calib] Creating local folders (" + dirname + ")")
+print("[calib] Creating local folders (" + outdir_name + ")")
 folderCreation = subprocess.Popen(['mkdir -p ' + workdir], stdout=subprocess.PIPE, shell=True);
 folderCreation.communicate()
 folderCreation = subprocess.Popen(['mkdir -p ' + condordir], stdout=subprocess.PIPE, shell=True);
@@ -65,21 +65,21 @@ CopyParam.communicate()
 
 if( isOtherT2 and storageSite=="T2_BE_IIHE" and isCRAB ):
    print("[calib] Creating folders on PNFS")
-   folderCreation = subprocess.Popen(['srmmkdir srm://maite.iihe.ac.be:8443' + eosPath + '/' + dirname ], stdout=subprocess.PIPE, shell=True);
+   folderCreation = subprocess.Popen(['srmmkdir srm://maite.iihe.ac.be:8443' + eosPath + '/' + outdir_name ], stdout=subprocess.PIPE, shell=True);
    folderCreation.communicate()
 else:
    print("[calib] Creating folders on EOS")
-   folderCreation = subprocess.Popen(['mkdir -p ' + eosPath + '/' + dirname ], stdout=subprocess.PIPE, shell=True);
+   folderCreation = subprocess.Popen(['mkdir -p ' + eosPath + '/' + outdir_name ], stdout=subprocess.PIPE, shell=True);
    folderCreation.communicate()
 
 for it in range(nIterations):
     if( isOtherT2 and storageSite=="T2_BE_IIHE" and isCRAB ):
-       print("[calib]  ---  srmmkdir " + eosPath + '/' + dirname + '/iter_' + str(it))
-       folderCreation = subprocess.Popen(['srmmkdir srm://maite.iihe.ac.be:8443' + eosPath + '/' + dirname + '/iter_' + str(it)], stdout=subprocess.PIPE, shell=True);
+       print("[calib]  ---  srmmkdir " + eosPath + '/' + outdir_name + '/iter_' + str(it))
+       folderCreation = subprocess.Popen(['srmmkdir srm://maite.iihe.ac.be:8443' + eosPath + '/' + outdir_name + '/iter_' + str(it)], stdout=subprocess.PIPE, shell=True);
        folderCreation.communicate()
     else:
-       print("[calib]  ---  mkdir " + eosPath + '/' + dirname + '/iter_' + str(it))
-       folderCreation = subprocess.Popen(['mkdir ' + eosPath + '/' + dirname + '/iter_' + str(it)], stdout=subprocess.PIPE, shell=True);
+       print("[calib]  ---  mkdir " + eosPath + '/' + outdir_name + '/iter_' + str(it))
+       folderCreation = subprocess.Popen(['mkdir ' + eosPath + '/' + outdir_name + '/iter_' + str(it)], stdout=subprocess.PIPE, shell=True);
        folderCreation.communicate()
 
 #-------- fill cfg files --------#
@@ -118,10 +118,10 @@ for it in range(nIterations):
     for num_list in range(Nlist):
         haddSrc_n_s.append( srcPath + "/hadd/hadd_iter_" + str(it) + "_step_" + str(num_list)+ ".list")
         haddSrc_f_s.append( open(  haddSrc_n_s[num_list], 'w') )
-        fileToAdd_final_n_s = eosPath + '/' + dirname + '/iter_' + str(it) + '/' + NameTag + 'epsilonPlots_' + str(num_list) + '.root\n'
+        fileToAdd_final_n_s = eosPath + '/' + outdir_name + '/iter_' + str(it) + '/' + NameTag + 'epsilonPlots_' + str(num_list) + '.root\n'
         for nj in range(nHadd):
             nEff = num_list*nHadd+nj
-            fileToAdd_n_s = eosPath + '/' + dirname + '/iter_' + str(it) + '/' + NameTag + outputFile + '_' + str(nEff) + '.root\n'
+            fileToAdd_n_s = eosPath + '/' + outdir_name + '/iter_' + str(it) + '/' + NameTag + outputFile + '_' + str(nEff) + '.root\n'
             if(nEff < NrelJob) :
                 haddSrc_f_s[num_list].write(fileToAdd_n_s)
         haddSrc_final_f_s.write(fileToAdd_final_n_s)
@@ -129,7 +129,7 @@ for it in range(nIterations):
     haddSrc_final_f_s.close()
 
     # create Hadd cfg file
-    dest = eosPath + '/' + dirname + '/iter_' + str(it) + '/'
+    dest = eosPath + '/' + outdir_name + '/iter_' + str(it) + '/'
     for num_list in range(Nlist):
         hadd_cfg_n = cfgHaddPath + "/HaddCfg_iter_" + str(it) + "_job_" + str(num_list) + ".sh"
         hadd_cfg_f = open( hadd_cfg_n, 'w' )
@@ -178,8 +178,8 @@ for it in range(nIterations):
         fillSrc_n = srcPath + "/Fill/iter_" + str(it) + "/submit_iter_" + str(it) + "_job_" + str(ijob) + ".sh"
         fillSrc_f = open( fillSrc_n, 'w')
         source_s = NameTag +outputFile + "_" + str(ijob) + ".root"
-        destination_s = eosPath + '/' + dirname + '/iter_' + str(it) + "/" + source_s
-        logpathFill = pwd + "/" + dirname + "/log/iter_" + str(it) + "/fillEps_iter_" + str(it) + "_job_" + str(ijob) + ".log"
+        destination_s = eosPath + '/' + outdir_name + '/iter_' + str(it) + "/" + source_s
+        logpathFill = pwd + "/" + outdir_name + "/log/iter_" + str(it) + "/fillEps_iter_" + str(it) + "_job_" + str(ijob) + ".log"
         printSubmitSrc(fillSrc_f, fill_cfg_n, "/tmp/" + source_s, destination_s , pwd, logpathFill)
         fillSrc_f.close()
 
@@ -232,8 +232,8 @@ for it in range(nIterations):
         # print source file for batch submission of FitEpsilonPlot task
         fitSrc_n = srcPath + "/Fit/submit_justFoldSM_iter_" + str(it) + ".sh"
         fitSrc_f = open( fitSrc_n, 'w')
-        destination_s = eosPath + '/' + dirname + '/iter_' + str(it) + "/" + NameTag + "Barrel_" + str(nFit)+ "_" + calibMapName
-        logpath = pwd + "/" + dirname + "/log/" + "fitEpsilonPlot_justFoldSM_iter_" + str(it) + ".log"
+        destination_s = eosPath + '/' + outdir_name + '/iter_' + str(it) + "/" + NameTag + "Barrel_" + str(nFit)+ "_" + calibMapName
+        logpath = pwd + "/" + outdir_name + "/log/" + "fitEpsilonPlot_justFoldSM_iter_" + str(it) + ".log"
         printSubmitFitSrc(fitSrc_f, fit_cfg_n, "/tmp/" + NameTag + "justFoldSM_" + calibMapName, destination_s, pwd, logpath, justDoHistogramFolding=True)
         fitSrc_f.close()
 
@@ -254,8 +254,8 @@ for it in range(nIterations):
         # print source file for batch submission of FitEpsilonPlot task
         fitSrc_n = srcPath + "/Fit/submit_EB_" + str(nFit) + "_iter_" + str(it) + ".sh"
         fitSrc_f = open( fitSrc_n, 'w')
-        destination_s = eosPath + '/' + dirname + '/iter_' + str(it) + "/" + NameTag + "Barrel_" + str(nFit)+ "_" + calibMapName
-        logpath = pwd + "/" + dirname + "/log/" + "fitEpsilonPlot_EB_" + str(nFit) + "_iter_" + str(it) + ".log"
+        destination_s = eosPath + '/' + outdir_name + '/iter_' + str(it) + "/" + NameTag + "Barrel_" + str(nFit)+ "_" + calibMapName
+        logpath = pwd + "/" + outdir_name + "/log/" + "fitEpsilonPlot_EB_" + str(nFit) + "_iter_" + str(it) + ".log"
         if( isOtherT2 and storageSite=="T2_BE_IIHE" and isCRAB ):
             printSubmitFitSrc(fitSrc_f, fit_cfg_n, "$TMPDIR/" + NameTag + "Barrel_" + str(nFit) + "_" + calibMapName, destination_s, pwd, logpath)
         else:
@@ -279,8 +279,8 @@ for it in range(nIterations):
         # print source file for batch submission of FitEpsilonPlot task
         fitSrc_n = srcPath + "/Fit/submit_EE_" + str(nFit) + "_iter_" + str(it) + ".sh"
         fitSrc_f = open( fitSrc_n, 'w')
-        destination_s = eosPath + '/' + dirname + '/iter_' + str(it) + "/" + NameTag + "Endcap_" + str(nFit) + "_" + calibMapName
-        logpath = pwd + "/" + dirname + "/log/" + "fitEpsilonPlot_EE_" + str(nFit) + "_iter_" + str(it) + ".log"
+        destination_s = eosPath + '/' + outdir_name + '/iter_' + str(it) + "/" + NameTag + "Endcap_" + str(nFit) + "_" + calibMapName
+        logpath = pwd + "/" + outdir_name + "/log/" + "fitEpsilonPlot_EE_" + str(nFit) + "_iter_" + str(it) + ".log"
         if( isOtherT2 and storageSite=="T2_BE_IIHE" and isCRAB ):
             printSubmitFitSrc(fitSrc_f, fit_cfg_n, "$TMPDIR/" + NameTag + "Endcap_" + str(nFit)+ "_" + calibMapName, destination_s, pwd, logpath)
         else:
