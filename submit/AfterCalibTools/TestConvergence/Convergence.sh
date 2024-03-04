@@ -1,8 +1,8 @@
 #!/bin/bash
 
 eosPath="/eos/cms/store/group/dpg_ecal/comm_ecal/pi0/"
-dirName="AlCaP0_2023BCD_TestCalib"                            # dirname (see CalibCode/submit/parameters.py)  
-iter_number="4"                                                          # number n of iterations (iter_0 to iter_{n-1})
+dirName="AlCaP0_2023BCD_TestCalib_iter4to10"                            # dirname (see CalibCode/submit/parameters.py)  
+iter_number="6"                                                          # number n of iterations (iter_0 to iter_{n-1})
 tagName="${dirName}_"                           # TagName (see CalibCode/submit/parameters.py)  
 
 # will copy output here, if directory exists
@@ -13,7 +13,7 @@ nJump=1
 # format is newDirName_ext1,newIterNumber_ext1,newTagName_ext1:newDirName_ext2,newIterNumber_ext2,newTagName_ext2 and so on (different extensions separated by : )
 extension="noExtension"
 extensionDirName="AlCaP0_2023BCD_TestCalib_iter4to10"
-extension="${extensionDirName},6,${extensionDirName}_"
+#extension="${extensionDirName},6,${extensionDirName}_"
 detectorToSkip="no"   # detectorToSkip = "no" to skip nothing, "EB" to skip EB, "EE" to skip EE
 saveHistograms=1  # = 0 to skip drawing histograms (will only save final convergence graph, saving space). Any value different from 0 is equivalent to true
 
@@ -35,7 +35,7 @@ done
 
 if [ "${extension}" != "noExtension" ]
 then
-    echo "Extension added: will store plots in --> ${wwwTargetDir}extension/ (if it exists)"
+    echo "Extension added: will store plots in --> ${wwwTargetDir} (if it exists)"
     wwwTargetDir=${wwwTargetDir}extension
 fi
 

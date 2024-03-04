@@ -74,15 +74,15 @@ void calibAnaEcalEB::setHistograms() {
       string match = "iter_";
       string iterN_str = this->getIterNumber().substr(this->getIterNumber().find(match) + match.size());
       Int_t iterN_int = atoi(iterN_str.c_str());
-      if (iterN_int > 2 || this->getDirName().find("_ext") != string::npos) 
-	th2dMinZaxisVector.push_back(0.134);
+      if (iterN_int > 10 || this->getDirName().find("_ext") != string::npos) 
+         th2dMinZaxisVector.push_back(0.134);
       else 
-	th2dMinZaxisVector.push_back(0.130);
+         th2dMinZaxisVector.push_back(0.130);
     }
     th2dMinZaxisVector.push_back(0.005);
   } else {
-    th2dMinZaxisVector.push_back(0.500);
-    th2dMinZaxisVector.push_back(0.008);
+     th2dMinZaxisVector.push_back(0.500);
+     th2dMinZaxisVector.push_back(0.008);
   }
   th2dMinZaxisVector.push_back(0.0);//0.0
   th2dMinZaxisVector.push_back(0.02);//0.0
@@ -99,20 +99,20 @@ void calibAnaEcalEB::set2DmapMaxZaxisVector() {
   th2dMaxZaxisVector.push_back(10e9); // when this value is very large (bigger than the default) use the default to plot axis                  
   th2dMaxZaxisVector.push_back(0.005);//0.02                                                  
   if (Pi0orEta == "Pi0") {
-    if (this->getIterNumber() == "iter_0" && this->getDirName().find("_ext") == string::npos) th2dMaxZaxisVector.push_back(0.150);
-    else {
-      string match = "iter_";
-      string iterN_str = this->getIterNumber().substr(this->getIterNumber().find(match) + match.size());
-      Int_t iterN_int = atoi(iterN_str.c_str());
-      if (iterN_int > 2 || this->getDirName().find("_ext") != string::npos) 
-	th2dMaxZaxisVector.push_back(0.136);
-      else 
-	th2dMaxZaxisVector.push_back(0.140);
-    }
-    th2dMaxZaxisVector.push_back(0.015);
+     if (this->getIterNumber() == "iter_0" && this->getDirName().find("_ext") == string::npos) th2dMaxZaxisVector.push_back(0.150);
+     else {
+        string match = "iter_";
+        string iterN_str = this->getIterNumber().substr(this->getIterNumber().find(match) + match.size());
+        Int_t iterN_int = atoi(iterN_str.c_str());
+        if (iterN_int > 10 || this->getDirName().find("_ext") != string::npos) 
+           th2dMaxZaxisVector.push_back(0.136);
+        else 
+           th2dMaxZaxisVector.push_back(0.140);
+     }
+     th2dMaxZaxisVector.push_back(0.015);
   } else {
-    th2dMaxZaxisVector.push_back(0.600);
-    th2dMaxZaxisVector.push_back(0.025);
+     th2dMaxZaxisVector.push_back(0.600);
+     th2dMaxZaxisVector.push_back(0.025);
   }
   th2dMaxZaxisVector.push_back(70);
   th2dMaxZaxisVector.push_back(0.2);
@@ -251,9 +251,9 @@ void calibAnaEcalEB::Loop()
       string iterN_str = this->getIterNumber().substr(this->getIterNumber().find(match) + match.size());
       Int_t iterN_int = atoi(iterN_str.c_str());
       if (iterN_int > 2 || this->getDirName().find("_ext") != string::npos) 
-	mean_iphiProfile->GetYaxis()->SetRangeUser(0.134,0.136);
+         mean_iphiProfile->GetYaxis()->SetRangeUser(0.13,0.14);
       else 
-	mean_iphiProfile->GetYaxis()->SetRangeUser(0.13,0.14);
+         mean_iphiProfile->GetYaxis()->SetRangeUser(0.13,0.14);
     }
   } else mean_iphiProfile->GetYaxis()->SetRangeUser(0.5,0.6);
   mean_iphiProfile->GetYaxis()->SetTitleSize(0.055);

@@ -8,7 +8,7 @@
 ##############################################
 
 
-iter_ini=0                                                    # first iteration to use
+iter_ini=5                                                    # first iteration to use
 iter_fin=5                                                      # last iteration to use: it is included in sequence below
 path="/store/group/dpg_ecal/comm_ecal/pi0/"  # path to directory on eos
 #dirName="AlCaP0_2023BCD_TestCalib"

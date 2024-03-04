@@ -1,14 +1,15 @@
 #! /bin/bash
 
-thisYear="23"   # use 16, 17, 18
+thisYear="22"   # use 16, 17, 18, 22, 23 ecc...
 dayMonthYear=`date +%d_%m_%Y`
 dataset="AlCaP0"
 runYear="20${thisYear}"
-JsonFilter="/eos/user/c/cmsdqm/www/CAF/certification/Collisions23/DCSOnly_JSONS/Collisions23_13p6TeV_eraBCD_366403_370790_DCSOnly_TkPx.json"
-#JsonFilter="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions${thisYear}/13TeV/DCSOnly/json_DCSONLY.txt"   # caution to the year
-#JsonFilter="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/PromptReco/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt"
-#JsonFilter="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
-#JsonFilter="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt"
+# 2022 Golden json (era B-G)
+JsonFilter="/eos/user/c/cmsdqm/www/CAF/certification/Collisions22/Cert_Collisions2022_355100_362760_Golden.json"
+# 2023 Golden json (era B-D)
+#JsonFilter="/eos/user/c/cmsdqm/www/CAF/certification/Collisions23/Cert_Collisions2023_366442_370790_Golden.json"
+# 2023 DCSonly json
+#JsonFilter="/eos/user/c/cmsdqm/www/CAF/certification/Collisions23/DCSOnly_JSONS/Collisions23_13p6TeV_eraBCD_366403_370790_DCSOnly_TkPx.json"
 firstRunBrilcalc="" # can be empty, otherwise it is used to select a run range for the brilcalc command
 lastRunBrilcalc="" # can be empty, otherwise it is used to select a run range for the brilcalc command
 
@@ -29,7 +30,7 @@ fi
 
 echo "Creating list of file running dasgoclient"
 eras=(A B C D E F G H I L M N O P Q R S T U V Z)
-eras=(B C D) 
+eras=(B C D E F G) 
 echo "" > ${fileList}
 for dataEra in ${eras[@]} 
 do 

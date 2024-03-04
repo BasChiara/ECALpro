@@ -69,7 +69,7 @@ if MakeNtuple4optimization:
    nIterations = 1
 #nThread          = 4 # if bigger than 1, enable multithreading, but I'm not sure if ECALpro supports it (see methods.py searching nThread)
 
-SubmitFurtherIterationsFromExisting = False
+SubmitFurtherIterationsFromExisting = True 
 # maybe I don't need the root://eoscms/ prefix if eos is mounted
 startingCalibMap = '/eos/cms/store/group/dpg_ecal/comm_ecal/pi0/AlCaP0_2023BCD_TestCalib/iter_3/AlCaP0_2023BCD_TestCalib_calibMap.root'
 SystOrNot = 0 # can be 0, 1 or 2 to run on all (default), even or odd events. It works only if you submit this new iteration from an existing one, therefore SubmitFurtherIterationsFromExisting must be set true. Tipically 0 is the default and has no real effect, it is like submitting usual iterations.  
