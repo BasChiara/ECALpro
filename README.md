@@ -6,7 +6,7 @@ cmsrel CMSSW_13_3_0_pre3
 cd CMSSW_13_3_0_pre3/src
 cmsenv
 git cms-init
-git clone --branch 133X -o pi0_cbasile https://github.com/BasChiara/ECALpro.git CalibCode
+git clone --branch 133X -o pi0_cbasile git@github.com:BasChiara/ECALpro.git CalibCode
 scram b -j16
 ```
 This repo is set up to produce 2023 pi0 ICs for final rereco (04/03/2024). Just lounch the commands:
