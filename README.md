@@ -2,19 +2,25 @@ Welcome and thanks for choosing the ECALpro tools!
 
 Download:
 ```
-wget https://raw.githubusercontent.com/ECALELFS/ECALpro/master/setup.sh
-chmod +x setup.sh
-./setup.sh CMSSW_7_4_15
-cd CMSSW_7_4_15/src
+cmsrel CMSSW_13_3_0_pre3  
+cd CMSSW_13_3_0_pre3/src
+scramv1 runtime -sh
+git cms-init
+git clone -b 133X https://github.com/BasChiara/ECALpro.git 
+scram b -j16
+cd ..
 cmsenv
 ```
-
-
+This repo is set up to produce 2023 pi0 ICs for final rereco (04/03/2024). Just lounch the commands:
+```
+cd submit
+./submitCalibrationCondor.py -l
+```
 Intro:
 
 To get IC you basically need only to do 2 things:
 1) Set the file parameters.py with the right values
-2) lounce the command: "./submitCalibration.py"
+2) lounce the command: "./submitCalibrationCondor.py -l"
 
 ------
 1a) parameters.py

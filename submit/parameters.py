@@ -41,8 +41,8 @@ MakeNtuple4optimization = False
 useCalibrationSelection = False # to use same selection of calibration when making ntuples (so not to copy all the cuts)
 useStreamSelection = False   # for now it only work with MakeNtuple4optimization = True, otherwise it is ignored, it is a hardcoded way to use the stream selection below
 #InputList and Folder name
-inputlist_n      = 'InputList/purified_AlCaP0_Run2022_BCDEFG_04_03_2024.list' if isMC==False else 'InputList/MultiPion_FlatPt-1To15_PhotonPtFilter_RunIIAutumn18DRPremix-102X_upgrade2018_realistic_v15-v2.list'
-outdir_name          = 'AlCaP0_2022_reReco' if isMC==False else 'pi0CC_2018_EoverEtrue_foldSM_nFit10_onlyEB_fixGamma2EoverEtrue'   #'pi0Gun_MCV2_EoverEtrue_foldSM' #'testMC_aoutdir_name          = 'AlCaEta_2018_tagAsPi0ForULcalibration_ntuplesOptim' if isMC==False else 'pi0CC_2018_EoverEtrue_foldSM_nFit10_onlyEB_fixGamma2EoverEtrue'   #'pi0Gun_MCV2_EoverEtrue_foldSM' #'testMC_all_v2' #'AlCaP0_IC2017_upTo21September2017_2012regression_v2' # 'test' 
+inputlist_n      = 'InputList/purified_AlCaP0_Run2023_BCD_04_03_2024.list' if isMC==False else 'InputList/MultiPion_FlatPt-1To15_PhotonPtFilter_RunIIAutumn18DRPremix-102X_upgrade2018_realistic_v15-v2.list'
+outdir_name          = 'AlCaP0_2023_reReco' if isMC==False else 'pi0CC_2018_EoverEtrue_foldSM_nFit10_onlyEB_fixGamma2EoverEtrue'   #'pi0Gun_MCV2_EoverEtrue_foldSM' #'testMC_aoutdir_name          = 'AlCaEta_2018_tagAsPi0ForULcalibration_ntuplesOptim' if isMC==False else 'pi0CC_2018_EoverEtrue_foldSM_nFit10_onlyEB_fixGamma2EoverEtrue'   #'pi0Gun_MCV2_EoverEtrue_foldSM' #'testMC_all_v2' #'AlCaP0_IC2017_upTo21September2017_2012regression_v2' # 'test' 
 NameTag          = outdir_name+'_' # Tag to the names to avoid overlap
 Silent           = False                 # True->Fill modules is silent; False->Fill modules has a standard output
 
@@ -70,7 +70,7 @@ if MakeNtuple4optimization:
 
 SubmitFurtherIterationsFromExisting = True 
 # maybe I don't need the root://eoscms/ prefix if eos is mounted
-startingCalibMap = '/eos/cms/store/group/dpg_ecal/comm_ecal/pi0/AlCaP0_2022FG_TestCalib_iter5to10/iter_5/AlCaP0_2022FG_TestCalib_iter5to10_calibMap.root'
+startingCalibMap = '/eos/cms/store/group/dpg_ecal/comm_ecal/pi0/AlCaP0_2023BCD_TestCalib_iter4to10/iter_5/AlCaP0_2023BCD_TestCalib_iter4to10_calibMap.root'
 SystOrNot = 0 # can be 0, 1 or 2 to run on all (default), even or odd events. It works only if you submit this new iteration from an existing one, therefore SubmitFurtherIterationsFromExisting must be set true. Tipically 0 is the default and has no real effect, it is like submitting usual iterations.  
 
 #N files
@@ -406,7 +406,7 @@ triggerTag         = 'InputTag("TriggerResults","","HLT")' if isMC==False else '
 L1GTobjmapTag      = 'InputTag("hltGtStage2Digis")' if isMC==False else 'InputTag("gtStage2Digis","","RECO")' # this takes the BXVector<GlobalAlgBlk> for L1 trigger info
 useHLTFilter       = "True" if isMC==False else "False"  # Add to the path the request of a HLT path:  process.AlcaP0Filter.HLTPaths = 
 correctHits        = 'False' # this seems to add obsolete code, keep False
-globaltag          = '133X_dataRun3_Candidate_2024_02_29_10_10_59'  if isMC==False else '123X_mcRun2_asymptotic_v1' 
+globaltag          = '133X_dataRun3_Candidate_2024_02_29_10_26_53'  if isMC==False else '123X_mcRun2_asymptotic_v1' 
 FROMDIGI           = True if isMC==False else False
 if runCalibrationFromRecHits:
    FROMDIGI = False
