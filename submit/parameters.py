@@ -406,7 +406,7 @@ triggerTag         = 'InputTag("TriggerResults","","HLT")' if isMC==False else '
 L1GTobjmapTag      = 'InputTag("hltGtStage2Digis")' if isMC==False else 'InputTag("gtStage2Digis","","RECO")' # this takes the BXVector<GlobalAlgBlk> for L1 trigger info
 useHLTFilter       = "True" if isMC==False else "False"  # Add to the path the request of a HLT path:  process.AlcaP0Filter.HLTPaths = 
 correctHits        = 'False' # this seems to add obsolete code, keep False
-globaltag          = '123X_dataRun3_Prompt_v12'  if isMC==False else '123X_mcRun2_asymptotic_v1' 
+globaltag          = '133X_dataRun3_Candidate_2024_02_29_10_10_59'  if isMC==False else '123X_mcRun2_asymptotic_v1' 
 FROMDIGI           = True if isMC==False else False
 if runCalibrationFromRecHits:
    FROMDIGI = False
