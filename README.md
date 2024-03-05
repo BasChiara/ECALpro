@@ -4,16 +4,14 @@ Download:
 ```
 cmsrel CMSSW_13_3_0_pre3  
 cd CMSSW_13_3_0_pre3/src
-scramv1 runtime -sh
-git cms-init
-git clone -b 133X https://github.com/BasChiara/ECALpro.git 
-scram b -j16
-cd ..
 cmsenv
+git cms-init
+git clone --branch 133X -o pi0_cbasile https://github.com/BasChiara/ECALpro.git CalibCode
+scram b -j16
 ```
 This repo is set up to produce 2023 pi0 ICs for final rereco (04/03/2024). Just lounch the commands:
 ```
-cd submit
+cd CalibCode/submit
 ./submitCalibrationCondor.py -l
 ```
 Intro:
